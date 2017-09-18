@@ -96,14 +96,12 @@ def gconnect():
 	return output
 
 # Logout - revoke current user token and reset login_session
-@app.route('/logout/')
+@app.route('/logout/', methods=['POST'])
 def logout():
 	# only logout a user who has already logged in
 	credentials = login_session.get('credentials')
 	if credentials is None:
-		response = make_response(json.dumps('Current user is not logged in.'), 401)
-		response.headers['Content-Type'] = 'application/json'
-		return response
+		return 'Current user is not logged in.'
 	# revoke current token
 	url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % credentials
 	h = httplib2.Http()
@@ -115,15 +113,9 @@ def logout():
 		del login_session['username']
 		del login_session['email']
 		del login_session['user_id']
-
-		response = make_response(json.dumps('Successfully logged out.'), 200)
-		response.headers['Content-Type'] = 'application/json'
-		return response
+		return 'Successfully logged out.'
 	else:
-		# given token was involid
-		response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
-		response.headers['Content-Type'] = 'application/json'
-		return response
+		return 'Failed to revoke token for given user.'
 	
 @app.route('/')
 @app.route('/catalog/')
