@@ -1,0 +1,71 @@
+/* CSS Document */
+
+border {
+	font-family: sans-serif;
+	font-size: 100%;
+	background-color: #333333;
+}
+
+h1, h2, h3, h4 {
+	color: #CCCCCC;
+}
+
+h1, h2 {
+	font-family: 'Georgia', serif;
+	margin: 0;
+}
+
+h1 {
+	border-bottom: 2px solid #eee;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+p {
+	color: #CCCCCC;
+}
+
+a {
+	text-decoration: none;
+	color:#634535;
+	font-size: .75em;
+}
+
+div {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+}
+
+/* Header */
+header {
+	height: 75px;
+}
+
+#signinButton {
+	float: right;
+}
+
+header a {
+	font-size: 3em;
+	float: left;
+}
+
+
+#sidebar {
+	width: 33%;
+	padding: 5px;
+}
+
+#itemlist {
+	width: 66%;
+	padding: 5px;
+	text-align: center;
+}
+
+.flash {
+	background: #cee5F5;
+}
+
