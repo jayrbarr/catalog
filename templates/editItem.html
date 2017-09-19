@@ -34,7 +34,7 @@
 		data-cookiepolicy="single_host_origin"
 		data-callback="signInCallback"></span>
 	</div>
-	<button class="button" onclick="signOut();">Log off</button>
+	<button class="button" id="signout" onclick="signOut();">Log off</button>
 	<script>
 	  function signOut() {
 		var auth2 = gapi.auth2.getAuthInstance();

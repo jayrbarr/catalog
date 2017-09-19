@@ -2,18 +2,22 @@
 
 body {
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-	font-size: 100%;
+	font-size: 120%;
+	background-color: ghostwhite;
+	margin: 0;
 }
 
 h1 {
 	font-size: 2em;
-	color: darkblue;
+	color: orange;
 	margin: 0;
 	border-bottom: 2px solid #eee;
 }
 
 a {
 	text-decoration: none;
+	color: orange;
+	font-weight: bold;
 }
 
 div {
@@ -24,7 +28,7 @@ div {
 
 /* Header */
 header {
-	height: 8em;
+	height: 9em;
 	background-color: darkblue;
 }
 
@@ -46,6 +50,16 @@ header a {
 
 .button {
 	margin: 5px 0;
+}
+
+#signout {
+	background-color: orange;
+	color: white;
+	font-weight: bold;
+	height: 36px;
+	width: 120px;
+	border: none;
+	
 }
 
 #result {
@@ -77,16 +91,18 @@ header a {
 
 /* Sidebar */
 #sidebar {
-	width: 33%;
+	width: 25%;
 	padding: 5px;
-	text-align: center;
 }
 
 /* Item List */
 #itemlist {
-	width: 66%;
+	width: 74%;
 	padding: 5px;
-	text-align: center;
+}
+
+#itemlist span {
+	font-style: italic;
 }
 
 
