@@ -1,14 +1,10 @@
 <!doctype html>
-<html><!-- InstanceBegin template="/Templates/catalog-template.dwt" codeOutsideHTMLIsLocked="false" -->
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Content-Language" content="en">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" >
-<!-- InstanceBeginEditable name="doctitle" -->
 <title>Item Listing</title>
-<!-- InstanceEndEditable -->
-<!-- InstanceBeginEditable name="head" -->
-<!-- InstanceEndEditable -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <meta name="google-signin-scope" content="profile email">
 <meta name="google-signin-client_id" content="222190778761-87bhkrer20mq5q9q852hm23131h2n1bu.apps.googleusercontent.com">
@@ -17,7 +13,10 @@
 </head>
 <body>
 <header>
+	<!-- App Name in Header - links to main catalog -->
 	<a href="{{url_for('catalog')}}">Catalog App</a>
+	
+	<!-- Login and logout buttons in right upper corner of header -->
 	<div id="buttons">
 	<div class="button" >
 		<span class="g-signin2"
@@ -29,6 +28,30 @@
 		data-callback="signInCallback"></span>
 	</div>
 	<button class="button" id="signout" onclick="signOut();">Log off</button>
+	
+	<!-- callback function for Google signin -->
+	<script>
+	function signInCallback(authResult) {
+	  if (authResult['code']) {
+		// Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main catalog page
+		$.ajax({
+		  type: 'POST',
+		  url: '/gconnect?state={{STATE}}',
+		  processData: false,
+		  data: authResult['code'],
+		  contentType: 'application/octet-stream; charset=utf-8',
+		  success: function(result) {
+			  if (result) {
+				  $('#result').html(result);
+				  setTimeout(function() {window.location.href = "/catalog";}, 2000);
+			  } else if (authResult['error']) {
+				console.log('There was an error: ' + authResult['error']);
+			  }
+		  }
+	  }); } }
+	</script>
+	
+	<!-- onClick signOut function for signout button -->
 	<script>
 	  function signOut() {
 		var auth2 = gapi.auth2.getAuthInstance();
@@ -46,6 +69,8 @@
 				}}});})}
 	</script>
 	</div>
+	
+	<!-- All signin and signout function results as well as flash messages appear in div below -->
 	<div id="result">
 		{% with messages = get_flashed_messages() %}
 		  {% if messages %}
@@ -57,31 +82,9 @@
 		  {% endif %}
 		{% endwith %}
 	</div>
-  <script>
-		function signInCallback(authResult) {
-		  if (authResult['code']) {
-			// Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main catalog page
-			$.ajax({
-			  type: 'POST',
-			  url: '/gconnect?state={{STATE}}',
-			  processData: false,
-			  data: authResult['code'],
-			  contentType: 'application/octet-stream; charset=utf-8',
-			  success: function(result) {
-				  if (result) {
-					  $('#result').html(result);
-					  setTimeout(function() {window.location.href = "/catalog";}, 2000);
-				  } else if (authResult['error']) {
-					console.log('There was an error: ' + authResult['error']);
-				  }
-			  }
-		  }); } }
-		</script>
 </header>
-<!-- InstanceBeginEditable name="body" -->
 <h1>{{item.name}}</h1>
 <p>Description: {{item.description}}</p>
 <p><a href="{{url_for('editItem', item=item.name)}}">Edit</a> | <a href="{{url_for('deleteItem',item=item.name)}}">Delete</a></p>
-<!-- InstanceEndEditable -->
 </body>
-<!-- InstanceEnd --></html>
+</html>
