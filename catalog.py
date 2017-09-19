@@ -14,8 +14,10 @@ import httplib2
 import json
 import requests
 
-CLIENT_ID = json.loads(open('client_secrets.json', 'r')
-                       .read())['web']['client_id']
+CLIENT_ID = json.loads(open(
+    'client_secrets.json',
+    'r').read())['web']['client_id']
+APPLICATION_NAME = "Catalog App"
 
 app = Flask(__name__)
 
@@ -48,8 +50,8 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
-           % access_token)
+    url = ('https://www.googleapis.com/oauth2/v1/'
+           'tokeninfo?access_token=%s' % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
     if result.get('error') is not None:
@@ -81,7 +83,9 @@ def gconnect():
 
     # Get user info
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
-    params = {'access_token': credentials.access_token, 'alt': 'json'}
+    params = {
+        'access_token': credentials.access_token,
+        'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
     data = answer.json()
 
@@ -108,7 +112,7 @@ def logout():
     if credentials is None:
         return 'Current user is not logged in.'
     # revoke current token
-    url = 'https://accounts.google.com/o/oauth2/revoke token=%s' % credentials
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % credentials
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
@@ -149,10 +153,8 @@ def catalog():
 def showCategory(category):
     cat = session.query(Category).filter_by(name=category).one_or_none()
     if cat is not None:
-        catItems = session
-        .query(Item)
-        .filter_by(category_id=cat.id)
-        .order_by(Item.name)
+        catItems = session.query(Item).filter_by(
+            category_id=cat.id).order_by(Item.name)
         if 'username' not in login_session:
             return render_template(
                 'publiccategory.html',
