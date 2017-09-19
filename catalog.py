@@ -87,12 +87,7 @@ def gconnect():
 	else:
 		login_session['user_id'] = user_id
 	
-	output = ''
-	output += '<h1>Welcome, '
-	output += login_session['username']
-	output += '!</h1>'
-	flash("you are now logged in as %s" % login_session['username'])
-	print "done!"
+	output = "<p>You are now logged in as " + login_session['username']+"<p>"
 	return output
 
 # Logout - revoke current user token and reset login_session
