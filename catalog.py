@@ -24,7 +24,6 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 categories = session.query(Category)
-items = session.query(Item)
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -117,7 +116,7 @@ def logout():
 def catalog():
 	state=''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
 	login_session['state'] = state
-	print state
+	items = session.query(Item).order_by(Item.created.desc()).limit(10)
 	if 'username' not in login_session:
 		return render_template('publiccatalog.html', categories=categories, items=items, STATE=state)
 	return render_template('catalog.html', categories=categories, items=items, STATE=state)
