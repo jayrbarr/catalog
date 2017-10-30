@@ -21,7 +21,7 @@ APPLICATION_NAME = "Catalog App"
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///catalogwithusers.db')
+engine = create_engine(app.config.from_envvar('DATABASE_URL')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -286,6 +286,6 @@ def createUser(login_session):
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super_secret_key'
+    app.secret_key = app.config.from_envvar('SUPER_SECRET_KEY')
     app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='52.15.59.173', port=8000)
