@@ -1,1 +1,1 @@
-web: gunicorn catalog.wsgi
+web: python catalog.py
