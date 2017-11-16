@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 #
 # Catalog App
 
@@ -13,23 +13,24 @@ from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 import httplib2
 import json
 import requests
+import os
 
+MAIN_DIRECTORY = os.path.dirname(__file__)
+JSON_FILEPATH = os.path.join(MAIN_DIRECTORY, 'client_secrets.json')
 CLIENT_ID = json.loads(open(
-    'client_secrets.json',
+    JSON_FILEPATH,
     'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog App"
 
 app = Flask(__name__)
 
-engine = create_engine(app.config.from_envvar('DATABASE_URL')
+engine = create_engine('postgresql://catalog:catalog@127.0.0.1/catalog')
 Base.metadata.bind = engine
-
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # load static global list of categories. Not editable in this version.
 categories = session.query(Category).order_by(Category.name)
-
 
 # Google sign-in Oauth2 success response - initialize login session
 @app.route('/gconnect', methods=['POST'])
@@ -286,6 +287,5 @@ def createUser(login_session):
 
 
 if __name__ == '__main__':
-    app.secret_key = app.config.from_envvar('SUPER_SECRET_KEY')
     app.debug = True
-    app.run(host='52.15.59.173', port=8000)
+    app.run()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 #
 # Database setup for catalog app
 import os
@@ -19,7 +19,7 @@ class Category(Base):
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     email = Column(String(50), nullable=False)
@@ -32,7 +32,7 @@ class Item(Base):
     description = Column(String(250))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship(User)
     created = Column(DateTime(timezone=True), server_default=func.now())
 
@@ -43,6 +43,6 @@ class Item(Base):
             'description': self.description
         }
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('postgresql://catalog:catalog@127.0.0.1/catalog')
 
 Base.metadata.create_all(engine)
