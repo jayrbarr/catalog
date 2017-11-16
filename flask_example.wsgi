@@ -1,1 +1,0 @@
-from flask_example import application as application
