@@ -10,8 +10,8 @@ itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
 pkg-resources==0.0.0
-
+<<<<<<< HEAD
 Werkzeug==0.12.2
-
-
-
+=======
+Werkzeug==0.12.2
+>>>>>>> 85b6cf272618e7b63410426b5eb9c80ba922cbb0
