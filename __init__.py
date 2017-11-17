@@ -148,6 +148,10 @@ def catalog():
         items=items,
         STATE=state)
 
+# Google verification
+@app.route('/googled99ce8bde72b29d0.html')
+def googleVerification():
+	return render_template('googled99ce8bde72b29d0.html')
 
 # single category listing - all items in category
 @app.route('/catalog/<category>/')

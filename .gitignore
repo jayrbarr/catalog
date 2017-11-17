@@ -7,3 +7,4 @@ _notes/
 .gitignore
 .git/
 venv/
+database_setup.pyc
